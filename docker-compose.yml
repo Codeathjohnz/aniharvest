@@ -7,7 +7,7 @@ services:
     build: .
     restart: unless-stopped
     environment:
-      DB_HOST: db
+      DB_HOST: aniharvest-db   # unique name: other projects on the same Dokploy network may also have a "db"
       DB_NAME: aniharvest_db
       DB_USER: aniharvest
       DB_PASS: ${DB_PASSWORD:?Set DB_PASSWORD in Dokploy Environment}
@@ -17,12 +17,12 @@ services:
     volumes:
       - uploads:/var/www/html/api/uploads
     depends_on:
-      db:
+      aniharvest-db:
         condition: service_healthy
     expose:
       - "80"
 
-  db:
+  aniharvest-db:
     image: mariadb:10.11
     restart: unless-stopped
     environment:

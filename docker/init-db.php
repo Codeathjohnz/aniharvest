@@ -5,7 +5,7 @@
 // 4. Optionally adds sample sales history for the farmer analytics (SEED_SAMPLE_ORDERS=1).
 
 $dir = getenv('SETUP_DIR') ?: '/var/www/setup';
-$host = getenv('DB_HOST') ?: 'db';
+$host = getenv('DB_HOST') ?: 'aniharvest-db';
 $name = getenv('DB_NAME') ?: 'aniharvest_db';
 $user = getenv('DB_USER') ?: 'aniharvest';
 $pass = getenv('DB_PASS') ?: '';
