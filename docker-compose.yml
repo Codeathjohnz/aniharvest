@@ -32,7 +32,7 @@ services:
       MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?Set DB_ROOT_PASSWORD in Dokploy Environment}
     command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
     volumes:
-      - db_data_v2:/var/lib/mysql
+      - db_data_v3:/var/lib/mysql
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
@@ -40,5 +40,5 @@ services:
       retries: 30
 
 volumes:
-  db_data_v2:
+  db_data_v3:
   uploads:

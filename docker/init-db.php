@@ -17,6 +17,11 @@ for ($i = 1; $i <= 60; $i++) {
         break;
     } catch (PDOException $e) {
         fwrite(STDERR, "[init-db] waiting for MySQL ($i/60): {$e->getMessage()}\n");
+        if (str_contains($e->getMessage(), '[1045]') && $i === 1) {
+            fwrite(STDERR, "[init-db] HINT: the database volume was created with a different DB_PASSWORD. "
+                . "MariaDB keeps the password it was first started with; changing DB_PASSWORD later does not update it. "
+                . "Put back the original DB_PASSWORD, or start the database on a new, empty volume.\n");
+        }
         sleep(2);
     }
 }
