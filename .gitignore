@@ -4,3 +4,4 @@ api/uploads/*
 !api/uploads/.gitkeep
 .env
 *.log
+.env.*
