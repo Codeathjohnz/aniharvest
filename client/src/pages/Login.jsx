@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { toast } from '../components/Toast.jsx';
+import PasswordInput from '../components/PasswordInput.jsx';
 
 export function AuthShell({ title, subtitle, children }) {
   return (
@@ -62,7 +63,7 @@ export default function Login() {
     <AuthShell title="Welcome back" subtitle="Log in to your AniHarvest account.">
       <form onSubmit={submit} className="form">
         <label>Email<input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></label>
-        <label>Password<input type="password" required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} /></label>
+        <label>Password<PasswordInput required value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} /></label>
         {error && <div className="alert alert-error">{error}</div>}
         <button className="btn btn-primary btn-lg btn-block" disabled={busy}>{busy ? 'Logging in…' : 'Log In'}</button>
       </form>

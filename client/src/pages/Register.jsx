@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { AuthShell } from './Login.jsx';
 import { toast } from '../components/Toast.jsx';
+import PasswordInput from '../components/PasswordInput.jsx';
 
 export default function Register() {
   const { register } = useAuth();
@@ -47,7 +48,7 @@ export default function Register() {
           <label className="pop-in">Farm name<input name="farm_name" required value={form.farm_name} onChange={change} placeholder="e.g. Sunrise Valley Farm" /></label>
         )}
         <label>Email<input type="email" name="email" required value={form.email} onChange={change} /></label>
-        <label>Password<input type="password" name="password" required minLength={6} value={form.password} onChange={change} /></label>
+        <label>Password<PasswordInput name="password" required minLength={6} value={form.password} onChange={change} autoComplete="new-password" /></label>
         <div className="form-2">
           <label>Phone<input name="phone" value={form.phone} onChange={change} /></label>
           <label>{form.role === 'farmer' ? 'Farm location' : 'Address'}<input name="address" value={form.address} onChange={change} /></label>
