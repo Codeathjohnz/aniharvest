@@ -1,3 +1,4 @@
+import BrandLogo from './BrandLogo.jsx';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -8,7 +9,7 @@ export default function Footer() {
       </svg>
       <div className="container footer-grid">
         <div>
-          <div className="brand footer-brand"><span className="brand-icon">🌾</span><span>Ani<b>Harvest</b></span></div>
+          <div className="brand footer-brand"><BrandLogo /><span>Ani<b>Harvest</b></span></div>
           <p>Connecting hardworking local farmers directly with families who love fresh, honest food. From the field to your table — fair for everyone.</p>
         </div>
         <div>

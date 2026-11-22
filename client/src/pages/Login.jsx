@@ -1,3 +1,4 @@
+import BrandLogo from '../components/BrandLogo.jsx';
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -21,7 +22,7 @@ export function AuthShell({ title, subtitle, children }) {
       </div>
       <div className="auth-form-wrap">
         <div className="auth-card">
-          <Link to="/" className="brand"><span className="brand-icon">🌾</span><span>Ani<b>Harvest</b></span></Link>
+          <Link to="/" className="brand"><BrandLogo /><span>Ani<b>Harvest</b></span></Link>
           <h1>{title}</h1>
           <p className="muted">{subtitle}</p>
           {children}

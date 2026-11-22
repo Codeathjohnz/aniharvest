@@ -88,7 +88,8 @@ button, input, select, textarea { font: inherit; }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .brand { display: flex; align-items: center; gap: 8px; font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--leaf-800); font-weight: 600; }
 .brand b { color: var(--wheat-dark); font-weight: 800; }
-.brand-icon { display: inline-block; animation: sway 3s ease-in-out infinite; transform-origin: bottom center; }
+.brand-logo { display: block; border-radius: 10px; box-shadow: 0 4px 10px -4px rgba(31,81,48,.45); transition: transform .35s cubic-bezier(.3,1.6,.5,1); }
+.brand:hover .brand-logo { transform: rotate(-8deg) scale(1.08); }
 .nav-links { display: flex; align-items: center; gap: 22px; }
 .nav-links > a:not(.btn) { color: var(--ink); font-weight: 700; position: relative; padding: 4px 0; }
 .nav-links > a:not(.btn)::after {

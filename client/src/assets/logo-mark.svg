@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AniHarvest">
+  <defs>
+    <linearGradient id="ah-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4c9f5c"/>
+      <stop offset="1" stop-color="#1f5130"/>
+    </linearGradient>
+    <clipPath id="ah-clip"><rect width="64" height="64" rx="16"/></clipPath>
+  </defs>
+  <g clip-path="url(#ah-clip)">
+    <rect width="64" height="64" fill="url(#ah-bg)"/>
+    <!-- rising sun -->
+    <circle cx="45" cy="21" r="10" fill="#f4cd63"/>
+    <circle cx="45" cy="21" r="14" fill="#f4cd63" opacity=".18"/>
+    <!-- field -->
+    <path d="M0 50 C14 42 26 44 38 48 S56 50 64 45 V64 H0Z" fill="#163d22" opacity=".55"/>
+  </g>
+  <!-- wheat stalk -->
+  <path d="M26 57 C25 44 25.5 30 28 14" fill="none" stroke="#fbefc8" stroke-width="2.4" stroke-linecap="round"/>
+  <g fill="#f4cd63">
+    <ellipse cx="28.3" cy="13.5" rx="2.6" ry="4.6" transform="rotate(8 28.3 13.5)"/>
+    <ellipse cx="24" cy="20" rx="2.5" ry="4.4" transform="rotate(-32 24 20)"/>
+    <ellipse cx="31.6" cy="20.5" rx="2.5" ry="4.4" transform="rotate(38 31.6 20.5)"/>
+    <ellipse cx="23.2" cy="27.5" rx="2.5" ry="4.4" transform="rotate(-32 23.2 27.5)"/>
+    <ellipse cx="30.8" cy="28" rx="2.5" ry="4.4" transform="rotate(38 30.8 28)"/>
+    <ellipse cx="22.8" cy="35" rx="2.4" ry="4.2" transform="rotate(-32 22.8 35)"/>
+    <ellipse cx="30.2" cy="35.5" rx="2.4" ry="4.2" transform="rotate(38 30.2 35.5)"/>
+  </g>
+  <!-- leaf -->
+  <path d="M26.2 50 C30 42 37 39.5 43 40.5 C40.5 46.5 34 51 26.2 50Z" fill="#9fd19a"/>
+  <path d="M27.5 49 C31.5 45.5 35.5 43.2 40 41.8" fill="none" stroke="#2a6a3c" stroke-width="1" stroke-linecap="round"/>
+</svg>

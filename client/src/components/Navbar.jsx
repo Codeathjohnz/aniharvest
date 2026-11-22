@@ -1,3 +1,4 @@
+import BrandLogo from './BrandLogo.jsx';
 import { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -38,7 +39,7 @@ export default function Navbar() {
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-inner">
         <Link to="/" className="brand" onClick={close}>
-          <span className="brand-icon">🌾</span>
+          <BrandLogo />
           <span>Ani<b>Harvest</b></span>
         </Link>
 
