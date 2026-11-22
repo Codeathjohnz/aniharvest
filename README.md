@@ -39,6 +39,22 @@ npm run build
 ```
 Then open <http://localhost/April/client/dist/>
 
+## Deploy online (Dokploy on a VPS)
+1. Push this repository to GitHub.
+2. Dokploy → **Create Project** → **Create Service → Compose** → provider **GitHub**, pick the repo, branch `main`,
+   compose path `./docker-compose.yml`.
+3. **Environment** tab — add (use your own strong values):
+   ```
+   DB_PASSWORD=<long random password>
+   DB_ROOT_PASSWORD=<another long random password>
+   ADMIN_EMAIL=<your admin email>
+   ADMIN_PASSWORD=<at least 8 characters>
+   SEED_SAMPLE_ORDERS=1
+   ```
+4. **Domains** tab → add your domain (or Dokploy's free generated one) → service `app`, port `80`, HTTPS on.
+5. **Deploy**. The first start creates the tables and demo data automatically.
+   The installer and SQL files are not reachable from the web in the deployed version.
+
 ## Demo accounts
 | Role   | Email                  | Password  |
 |--------|------------------------|-----------|
