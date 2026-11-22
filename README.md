@@ -53,6 +53,10 @@ Then open <http://localhost/April/client/dist/>
    ```
 4. **Domains** tab → add your domain (or Dokploy's free generated one) → service `app`, port `80`, HTTPS on.
 5. **Deploy**. The first start creates the tables and demo data automatically.
+   ⚠️ Set `DB_PASSWORD` / `DB_ROOT_PASSWORD` **before the first deploy and never change them afterwards**: MariaDB keeps
+   the password it was created with. `ADMIN_PASSWORD` and `ADMIN_EMAIL` can be changed anytime (applied on every start).
+
+Live: <https://aniharvest.aticaraga.tech>
    The installer and SQL files are not reachable from the web in the deployed version.
 
 ## Demo accounts
