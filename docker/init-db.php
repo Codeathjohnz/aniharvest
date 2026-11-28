@@ -43,6 +43,11 @@ if (!$hasTables) {
     echo "[init-db] tables exist → leaving data untouched\n";
 }
 
+// Schema upgrades: each file only ADDs columns/tables IF NOT EXISTS, so it is safe on every start
+foreach (['migrate_location.sql'] as $m) {
+    if (is_file("$dir/$m")) { $load("$dir/$m"); echo "[init-db] applied $m\n"; }
+}
+
 // Admin account: email + password from the environment (the demo 'admin123' must never be live)
 $adminEmail = strtolower(trim(getenv('ADMIN_EMAIL') ?: 'admin@aniharvest.com'));
 $adminPass = getenv('ADMIN_PASSWORD') ?: '';

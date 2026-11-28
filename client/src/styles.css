@@ -960,6 +960,39 @@ td.num { text-align: right; font-variant-numeric: tabular-nums; }
   .low-row .meter { grid-column: 2 / -1; }
 }
 
+/* ---------- Order: delivery details for the seller ---------- */
+.deliver-to { margin: 14px 0 4px; padding: 14px 18px; border-radius: 14px; background: var(--leaf-100); border: 1px solid #cfe6c3; }
+.dt-label { font-weight: 800; color: var(--leaf-800); font-size: .9rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+.dt-grid { display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 10px 20px; }
+.dt-grid small { display: block; color: var(--muted); font-size: .78rem; font-weight: 700; }
+.dt-grid b { color: var(--ink); overflow-wrap: anywhere; }
+.dt-grid a { color: var(--ink); }
+.dt-grid a:hover b { color: var(--leaf-600); text-decoration: underline; }
+.dt-map { display: inline-block; margin-top: 4px; font-size: .85rem; font-weight: 800; color: var(--leaf-700) !important; }
+.dt-note { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cfe6c3; font-size: .92rem; }
+@media (max-width: 760px) { .dt-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Maps: delivery pin ---------- */
+/* keep Leaflet's internal z-indexes (400+) inside the map so it never covers the menu, modals or guide */
+.loc-map, .pin-map { position: relative; z-index: 0; isolation: isolate; border-radius: 14px; overflow: hidden; border: 2px solid var(--line); background: #e9efe4; }
+.loc-picker { display: flex; flex-direction: column; gap: 10px; }
+.loc-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.loc-status { margin: 0; font-size: .9rem; font-weight: 700; color: var(--leaf-800); }
+.loc-coords { margin: 0; }
+.pin-field { display: flex; flex-direction: column; gap: 8px; }
+.req { background: var(--wheat-light); color: #8a6414; font-size: .72rem; font-weight: 800; padding: 1px 8px; border-radius: 999px; text-transform: uppercase; margin-left: 6px; }
+.dt-pin { margin-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+.dt-pin-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.ah-pin { background: none; border: none; }
+.ah-pin-body {
+  width: 30px; height: 30px; margin: 0 auto; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+  background: linear-gradient(135deg, #e0574a, #b8432f); border: 3px solid #fff; box-shadow: 0 4px 10px rgba(0,0,0,.35);
+  display: grid; place-items: center; animation: pinDrop .45s cubic-bezier(.3,1.6,.5,1) both;
+}
+.ah-pin-dot { width: 9px; height: 9px; border-radius: 50%; background: #fff; }
+.ah-pin-shadow { width: 14px; height: 5px; margin: 4px auto 0; border-radius: 50%; background: rgba(0,0,0,.25); }
+@keyframes pinDrop { from { transform: rotate(-45deg) translate(0, -24px); opacity: 0; } }
+
 /* ---------- Password show / hide ---------- */
 .pw-field { position: relative; display: block; }
 .pw-field input { padding-right: 48px; }

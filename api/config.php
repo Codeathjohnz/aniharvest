@@ -50,7 +50,7 @@ function body(): array {
 function current_user(): ?array {
     $token = $_SERVER['HTTP_X_AUTH_TOKEN'] ?? '';
     if (!$token) return null;
-    $st = db()->prepare('SELECT id, name, email, role, phone, address, farm_name, wallet_balance, created_at FROM users WHERE token = ?');
+    $st = db()->prepare('SELECT id, name, email, role, phone, address, lat, lng, farm_name, wallet_balance, created_at FROM users WHERE token = ?');
     $st->execute([$token]);
     return $st->fetch() ?: null;
 }
@@ -104,6 +104,18 @@ function create_submission(int $userId, string $purpose, ?int $orderId, int $met
     db()->prepare('INSERT INTO payment_submissions (user_id, purpose, order_id, payment_method_id, provider, amount, reference_no, proof_image) VALUES (?,?,?,?,?,?,?,?)')
         ->execute([$userId, $purpose, $orderId, $methodId, $m['provider'], $amount, $ref, $proof ?: null]);
     return ['id' => (int)db()->lastInsertId(), 'provider' => $m['provider']];
+}
+
+/** Validates a map pin; returns [lat, lng] or [null, null] when none was sent. */
+function clean_pin($lat, $lng, bool $required = false): array {
+    if (($lat === null || $lat === '') && ($lng === null || $lng === '')) {
+        if ($required) json_out(['error' => 'Please pin your delivery location on the map.'], 422);
+        return [null, null];
+    }
+    if (!is_numeric($lat) || !is_numeric($lng) || $lat < -90 || $lat > 90 || $lng < -180 || $lng > 180) {
+        json_out(['error' => 'The map pin is not a valid location. Please pin it again.'], 422);
+    }
+    return [round((float)$lat, 7), round((float)$lng, 7)];
 }
 
 function require_user(array $roles = []): array {

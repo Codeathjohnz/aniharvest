@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { ProductImage } from '../components/ProductCard.jsx';
 import { toast } from '../components/Toast.jsx';
 import WalletModal from '../components/WalletModal.jsx';
+import { LocationPicker, hasPin } from '../components/MapPin.jsx';
 import QrPayPanel, { providerStyle } from '../components/QrPayPanel.jsx';
 import { usePageTour } from '../tour/Tour.jsx';
 
@@ -27,10 +28,16 @@ export default function Cart() {
 
   const [cashIn, setCashIn] = useState(false);
 
-  // fill in saved address/phone once the logged-in user has loaded
+  // exact delivery spot on the map (required to order)
+  const [pin, setPin] = useState(() => (user && hasPin(user.lat, user.lng) ? { lat: +user.lat, lng: +user.lng } : null));
+  const [pinKey, setPinKey] = useState(0); // remounts the map when the saved pin arrives
+
+  // fill in saved address/phone/pin once the logged-in user has loaded
   useEffect(() => {
     if (!user) return;
     setForm((f) => ({ ...f, shipping_address: f.shipping_address || user.address || '', phone: f.phone || user.phone || '' }));
+    if (!pin && hasPin(user.lat, user.lng)) { setPin({ lat: +user.lat, lng: +user.lng }); setPinKey((k) => k + 1); }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   // GCash / Maya accounts set up by the admin (pay by QR)
   const [methods, setMethods] = useState([]);
@@ -61,11 +68,12 @@ export default function Cart() {
         body: {
           ...form,
           items: items.map((i) => ({ id: i.id, quantity: i.quantity })),
+          delivery_lat: pin?.lat, delivery_lng: pin?.lng,
           ...(payByQr ? { payment_method_id: qr.methodId || methods[0]?.id, reference_no: qr.reference, proof_image: qr.proof } : {}),
         },
       });
       clear();
-      if (payByWallet) await refreshUser();
+      await refreshUser(); // wallet balance and the saved delivery pin both changed
       toast(payByQr
         ? `🧾 Order #${d.id} placed! We'll confirm your payment shortly.`
         : `🎉 Order #${d.id} ${payByWallet ? 'paid' : 'placed'}! The farmers are packing it now.`);
@@ -122,6 +130,12 @@ export default function Cart() {
           <label>Phone number
             <input name="phone" required value={form.phone} onChange={change} />
           </label>
+          {user?.role === 'buyer' && (
+            <div className="pin-field">
+              <div className="pay-label">Pin your exact delivery location <span className="req">required</span></div>
+              <LocationPicker key={pinKey} value={pin} onChange={setPin} height={260} />
+            </div>
+          )}
           <div className="pay-label">Payment method</div>
           <div className="pay-options">
             <button type="button" className={`pay-option ${form.payment_method === 'Cash on Delivery' ? 'active' : ''}`}
@@ -159,7 +173,8 @@ export default function Cart() {
             <small className="muted">Delivery fee ({peso(DELIVERY_FEE)}) is paid to the rider on arrival.</small>
           </div>
           {error && <div className="alert alert-error">{error}</div>}
-          <button className="btn btn-primary btn-lg btn-block" disabled={busy || (user && user.role !== 'buyer') || (user && payByWallet && short > 0)}>
+          {user?.role === 'buyer' && !pin && <p className="muted small center">📍 Pin your delivery location on the map to place the order.</p>}
+          <button className="btn btn-primary btn-lg btn-block" disabled={busy || (user && user.role !== 'buyer') || (user && payByWallet && short > 0) || (user?.role === 'buyer' && !pin)}>
             {busy ? 'Placing order…' : !user ? 'Log in to Checkout' : payByWallet ? `Pay ${peso(total)} with E-Wallet`
               : payByQr ? 'I have paid — Place Order' : 'Place Order'}
           </button>

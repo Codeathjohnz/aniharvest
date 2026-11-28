@@ -1,5 +1,6 @@
 import { api, peso } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
+import { PinMap, directionsUrl, hasPin } from './MapPin.jsx';
 import { toast } from './Toast.jsx';
 
 const FLOW = ['pending', 'processing', 'shipped', 'delivered'];
@@ -41,10 +42,47 @@ export default function OrderList({ orders, reload }) {
               <div>
                 <b>Order #{o.id}</b>
                 <small className="muted"> · {new Date(o.created_at.replace(' ', 'T')).toLocaleString()}</small>
-                {user.role !== 'buyer' && <div className="muted small">👤 {o.buyer_name} · 📞 {o.phone} · 📍 {o.shipping_address}</div>}
               </div>
               <span className={`status status-${o.status}`}>{ICONS[o.status]} {o.status}</span>
             </div>
+
+            {/* sellers and admin need to know where (and to whom) to deliver */}
+            {user.role !== 'buyer' && (
+              <div className="deliver-to">
+                <div className="dt-label">📦 Deliver to</div>
+                <div className="dt-grid">
+                  <div><small>Buyer</small><b>{o.buyer_name}</b></div>
+                  <div>
+                    <small>Phone</small>
+                    <a href={`tel:${(o.phone || '').replace(/[^\d+]/g, '')}`}><b>📞 {o.phone}</b></a>
+                  </div>
+                  <div className="dt-address">
+                    <small>Delivery address</small>
+                    <b>📍 {o.shipping_address}</b>
+                    {!hasPin(o.delivery_lat, o.delivery_lng) && (
+                      <a className="dt-map" target="_blank" rel="noopener noreferrer"
+                        href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(o.shipping_address || '')}`}>
+                        Search this address in Google Maps ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
+                {hasPin(o.delivery_lat, o.delivery_lng) ? (
+                  <div className="dt-pin">
+                    <PinMap lat={+o.delivery_lat} lng={+o.delivery_lng} />
+                    <div className="dt-pin-actions">
+                      <a className="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer" href={directionsUrl(o.delivery_lat, o.delivery_lng)}>
+                        🧭 Get directions
+                      </a>
+                      <span className="muted small">GPS pin: {Number(o.delivery_lat).toFixed(5)}, {Number(o.delivery_lng).toFixed(5)}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="dt-note">🗺️ No map pin on this order (placed before pins were required). Use the address above.</div>
+                )}
+                {o.notes && o.notes !== '[sample]' && <div className="dt-note">📝 Buyer’s note: {o.notes}</div>}
+              </div>
+            )}
 
             {o.status !== 'cancelled' && (
               <div className="tracker">

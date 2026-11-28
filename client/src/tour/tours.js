@@ -59,6 +59,7 @@ const TOURS = {
     { target: '.dash-stats', emoji: '📊', title: 'Quick stats', text: 'Your product count, orders, revenue and how many products are low on stock.' },
     { target: '.tabs', emoji: '🗂️', title: 'Products & Orders', text: 'Switch between your product list and the orders customers placed. The yellow badge = new orders.' },
     { target: '.td-actions', emoji: '✏️', title: 'Edit or delete', text: '✏️ changes price, stock or photo. 🗑️ removes the product. Set it to “Hidden” to pause selling instead.' },
+    { target: '.deliver-to', emoji: '📦', title: 'Where to deliver', text: 'Each order shows the buyer’s name, phone (tap to call), address and their exact pin on a map. “Get directions” opens the route in Google Maps.' },
     { target: '.order-actions select', emoji: '🚚', title: 'Update the order status', text: 'Move each order along: Processing → Shipped → Delivered. The buyer sees every change.' },
     HELP,
   ],
@@ -83,6 +84,7 @@ const TOURS = {
   cart: [
     { target: '.cart-row', emoji: '🧺', title: 'Your items', text: 'Change quantities with − / +, or ✕ to remove an item.' },
     { target: '.checkout textarea', emoji: '📍', title: 'Delivery details', text: 'Check your address and phone — we fill them in from your profile.' },
+    { target: '.pin-field', emoji: '🗺️', title: 'Pin your exact location', text: 'Tap “Use my current location” (or tap the map) and drag the pin to your door. The seller and courier get a map and turn-by-turn directions to it.' },
     { target: '.pay-options', emoji: '💳', title: 'Choose how to pay', text: 'Cash on Delivery, your e-Wallet, or GCash/Maya by scanning the store’s QR code.' },
     { target: '.summary', emoji: '🧾', title: 'Your total', text: 'Subtotal plus delivery. The delivery fee is paid to the rider on arrival.' },
     { target: '.checkout .btn-block', emoji: '✅', title: 'Place the order', text: 'Tap to confirm. You can follow the order in “Orders” afterwards.' },

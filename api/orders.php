@@ -47,6 +47,8 @@ if ($method === 'POST') {
     $phone = trim($in['phone'] ?? '');
     if (!$items || !$address || !$phone) json_out(['error' => 'Cart items, address and phone are required.'], 422);
     if ($u['role'] !== 'buyer') json_out(['error' => 'Only buyer accounts can place orders.'], 403);
+    // exact delivery spot (GPS or map pin) so the seller/courier can route to it
+    [$pinLat, $pinLng] = clean_pin($in['delivery_lat'] ?? null, $in['delivery_lng'] ?? null, true);
     // 'Cash on Delivery' | 'E-Wallet' | 'QR' (pay to one of the admin's GCash/Maya accounts, verified by admin)
     $payMethod = in_array($in['payment_method'] ?? '', ['Cash on Delivery', 'E-Wallet', 'QR'], true) ? $in['payment_method'] : 'Cash on Delivery';
 
@@ -66,9 +68,11 @@ if ($method === 'POST') {
             $total += $sub;
             $lines[] = [$p, $qty, $sub];
         }
-        $pdo->prepare('INSERT INTO orders (buyer_id, total, shipping_address, phone, payment_method, notes) VALUES (?,?,?,?,?,?)')
-            ->execute([$u['id'], $total, $address, $phone, $payMethod, $in['notes'] ?? null]);
+        $pdo->prepare('INSERT INTO orders (buyer_id, total, shipping_address, delivery_lat, delivery_lng, phone, payment_method, notes) VALUES (?,?,?,?,?,?,?,?)')
+            ->execute([$u['id'], $total, $address, $pinLat, $pinLng, $phone, $payMethod, $in['notes'] ?? null]);
         $orderId = (int)$pdo->lastInsertId();
+        // remember the pin as the buyer's default for next time
+        $pdo->prepare('UPDATE users SET lat = ?, lng = ? WHERE id = ?')->execute([$pinLat, $pinLng, $u['id']]);
         if ($payMethod === 'E-Wallet') {
             // throws "Insufficient wallet balance" → whole order is rolled back
             wallet_move((int)$u['id'], -$total, 'payment', "Payment for order #$orderId", ['order_id' => $orderId, 'method' => 'E-Wallet']);

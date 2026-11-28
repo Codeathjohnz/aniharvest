@@ -45,8 +45,9 @@ switch ($action) {
 
     case 'update':
         $u = require_user();
-        db()->prepare('UPDATE users SET name = ?, phone = ?, address = ?, farm_name = ? WHERE id = ?')->execute([
-            trim($in['name'] ?? $u['name']), $in['phone'] ?? null, $in['address'] ?? null,
+        [$lat, $lng] = clean_pin($in['lat'] ?? null, $in['lng'] ?? null);
+        db()->prepare('UPDATE users SET name = ?, phone = ?, address = ?, lat = ?, lng = ?, farm_name = ? WHERE id = ?')->execute([
+            trim($in['name'] ?? $u['name']), $in['phone'] ?? null, $in['address'] ?? null, $lat, $lng,
             $u['role'] === 'farmer' ? ($in['farm_name'] ?? null) : null, $u['id'],
         ]);
         json_out(['user' => current_user()]);
