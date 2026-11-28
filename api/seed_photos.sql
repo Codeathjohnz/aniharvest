@@ -1,0 +1,32 @@
+-- Real product photos for the demo products (public domain, see api/product-photos/CREDITS.md).
+-- Only fills products that have no photo yet, so a farmer's own upload is never replaced.
+UPDATE products SET image = 'product-photos/dinorado-rice.jpg' WHERE name = 'Premium Dinorado Rice' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/pechay.jpg' WHERE name = 'Fresh Pechay' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/carabao-mango.jpg' WHERE name = 'Carabao Mango' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/brown-eggs.jpg' WHERE name = 'Free-Range Brown Eggs' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/dressed-chicken.jpg' WHERE name = 'Native Chicken (Dressed)' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/broccoli.jpg' WHERE name = 'Highland Broccoli' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/carrots.jpg' WHERE name = 'Baguio Carrots' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/strawberries.jpg' WHERE name = 'Strawberries' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/basil.jpg' WHERE name = 'Fresh Basil' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/sweet-potato.jpg' WHERE name = 'Sweet Potato (Kamote)' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/potatoes.jpg' WHERE name = 'Potatoes' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/banana.jpg' WHERE name = 'Lakatan Banana' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/tomatoes.jpg' WHERE name = 'Tomatoes' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/lettuce-seedlings.jpg' WHERE name = 'Lettuce Seedlings' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/garlic.jpg' WHERE name = 'Native Garlic' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/milk.jpg' WHERE name = 'Fresh Carabao Milk' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/cabbage.jpg' WHERE name = 'Highland Cabbage' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/corn.jpg' WHERE name = 'Sweet Corn' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/pineapple.jpg' WHERE name = 'Pineapple' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/guimaras-mango.jpg' WHERE name = 'Guimaras Mango' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/green-mango.jpg' WHERE name = 'Green Mango (Indian)' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/sinandomeng-rice.jpg' WHERE name = 'Sinandomeng Rice' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/brown-rice.jpg' WHERE name = 'Brown Rice' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/glutinous-rice.jpg' WHERE name = 'Malagkit (Glutinous Rice)' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/lettuce-mix.jpg' WHERE name = 'Organic Lettuce Mix' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/lemongrass.jpg' WHERE name = 'Lemongrass (Tanglad)' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/eggplant.jpg' WHERE name = 'Eggplant (Talong)' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/duck-eggs.jpg' WHERE name = 'Fresh Duck Eggs' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/whole-chicken.jpg' WHERE name = 'Free-Range Chicken (Whole)' AND (image IS NULL OR image = '');
+UPDATE products SET image = 'product-photos/quail-eggs.jpg' WHERE name = 'Quail Eggs' AND (image IS NULL OR image = '');

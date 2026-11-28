@@ -43,9 +43,15 @@ if (!$hasTables) {
     echo "[init-db] tables exist → leaving data untouched\n";
 }
 
-// Schema upgrades: each file only ADDs columns/tables IF NOT EXISTS, so it is safe on every start
-foreach (['migrate_location.sql'] as $m) {
-    if (is_file("$dir/$m")) { $load("$dir/$m"); echo "[init-db] applied $m\n"; }
+// Upgrades, each applied ONCE and recorded (so e.g. a photo a farmer removed is not put back on restart)
+$pdo->exec('CREATE TABLE IF NOT EXISTS schema_migrations (name VARCHAR(100) PRIMARY KEY, applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)');
+foreach (['migrate_location.sql', 'seed_photos.sql'] as $m) {
+    $done = $pdo->prepare('SELECT 1 FROM schema_migrations WHERE name = ?');
+    $done->execute([$m]);
+    if ($done->fetch() || !is_file("$dir/$m")) continue;
+    $load("$dir/$m");
+    $pdo->prepare('INSERT INTO schema_migrations (name) VALUES (?)')->execute([$m]);
+    echo "[init-db] applied $m\n";
 }
 
 // Admin account: email + password from the environment (the demo 'admin123' must never be live)

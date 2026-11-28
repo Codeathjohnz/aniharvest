@@ -8,6 +8,9 @@ try {
     $pdo->exec($sql);
     // extra sample buyers, farmers and their products
     $pdo->exec(file_get_contents(__DIR__ . '/seed_more_users.sql'));
+    // real (public domain) product photos and GPS columns
+    $pdo->exec('USE aniharvest_db; ' . file_get_contents(__DIR__ . '/migrate_location.sql'));
+    $pdo->exec(file_get_contents(__DIR__ . '/seed_photos.sql'));
     echo '<h2 style="font-family:sans-serif;color:#2e7d32">✅ AniHarvest database installed successfully!</h2>';
     echo '<p style="font-family:sans-serif">Demo accounts: admin@aniharvest.com / admin123, farmer@aniharvest.com / farmer123, buyer@aniharvest.com / buyer123</p>';
 } catch (Throwable $e) {

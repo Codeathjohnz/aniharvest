@@ -21,7 +21,7 @@ COPY api/ /var/www/html/api/
 # Setup-only files live OUTSIDE the web root, then are removed from it,
 # so nobody on the internet can reset the database or read the SQL.
 RUN mkdir -p /var/www/setup \
- && cp /var/www/html/api/database.sql /var/www/html/api/seed_more_users.sql /var/www/html/api/migrate_location.sql \
+ && cp /var/www/html/api/database.sql /var/www/html/api/seed_more_users.sql /var/www/html/api/migrate_location.sql /var/www/html/api/seed_photos.sql \
        /var/www/html/api/seed_sample_orders.php /var/www/html/api/config.php /var/www/setup/ \
  && rm -f /var/www/html/api/install.php /var/www/html/api/seed_sample_orders.php /var/www/html/api/*.sql \
  && mkdir -p /var/www/html/api/uploads \
